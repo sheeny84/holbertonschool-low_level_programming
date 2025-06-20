@@ -39,7 +39,7 @@ void times_table(void)
 		while (n2 <= 9)
 		{
 			res = n1 * n2;
-			if (res <= 9)
+			if (n2 != 0 && res <= 9)
 			{
 				_putchar(' ');
 				_putchar(res + 48);
