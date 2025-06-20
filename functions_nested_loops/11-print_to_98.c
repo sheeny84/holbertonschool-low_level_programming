@@ -13,7 +13,7 @@ void print_to_98(int n)
 {
 	int temp;
 
-	while (n < 98)
+	while (n != 98)
 	{
 		if (n < 0)
 		{
@@ -22,28 +22,24 @@ void print_to_98(int n)
 		}
 		else
 			temp = n;
+		if (temp >= 100)
+		{
+			_putchar((temp / 100) + '0');
+			temp = temp - 100;
+			if (temp < 10)
+				_putchar((temp / 10) + '0');
+		}
 		/* print double digit numbers */
-		if (temp > 9)
+		if (temp >= 10)
 			_putchar((temp / 10) + '0');
 		/* print last digit */
 		_putchar((temp % 10) + '0');
 		_putchar(',');
 		_putchar(' ');
-		n++;
-	}
-	while (n > 98)
-	{
-		if (n >= 100)
-		{
-			_putchar((n / 100) + '0');
-			_putchar(((n - 100) / 10) + '0');
-		}
+		if (n < 98)
+			n++;
 		else
-			_putchar((n / 10) + '0');
-		_putchar((n % 10) + '0');
-		_putchar(',');
-		_putchar(' ');
-		n--;
+			n--;
 	}
 	_putchar('9');
 	_putchar('8');
