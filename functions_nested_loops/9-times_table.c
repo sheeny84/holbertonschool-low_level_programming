@@ -2,7 +2,8 @@
 #include "7-print_last_digit.c"
 
 /**
- * times_table - print 9 times table starting wiht 9
+ * print_double_digit - print double digit number
+ * @n: number to print
  *
  * Return: nothing
  */
@@ -27,6 +28,13 @@ void print_double_digit(int n)
 		_putchar('8');
 	print_last_digit(n);
 }
+
+/**
+ * times_table - print 9 times table starting wiht 9
+ *
+ * Return: nothing
+ *
+ */
 
 void times_table(void)
 {
