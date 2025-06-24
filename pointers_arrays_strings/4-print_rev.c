@@ -14,7 +14,7 @@ void print_rev(char *s)
 	int length;
 
 	length = _strlen(s);
-	/* s[0] is first element of string,                                          * so s[length - 1] is the last */
+	/* s[0] is first element and s[length - 1] is last */
 	i = length - 1;
 	while (i >= 0)
 	{
