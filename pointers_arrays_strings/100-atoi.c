@@ -30,7 +30,6 @@ int _atoi(char *s)
 {
 	int i = 0, len = 0, result = 0, neg = 0;
 	char digit;
-	
 	/* consume characters before number starts */
 	while ((*s < '0' || *s > '9') && *s != '\0')
 	{
