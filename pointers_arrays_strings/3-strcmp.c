@@ -7,8 +7,8 @@
  * @s2: pointer to second string
  *
  * Return: 0 if strings match
- * negative number if s1 is greater than s2
- * positive number if s2 is greater than s1
+ * positive number if s1 is greater than s2
+ * negative number if s2 is greater than s1
  */
 
 int _strcmp(char *s1, char *s2)
@@ -17,7 +17,7 @@ int _strcmp(char *s1, char *s2)
 
 	while (s1[i] != '\0' && s2[i] != '\0' && diff == 0)
 	{
-		diff = s2[i] - s1[i];
+		diff = s1[i] - s2[i];
 		i++;
 	}
 	return (diff);
