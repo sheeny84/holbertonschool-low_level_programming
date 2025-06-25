@@ -28,14 +28,17 @@ int _pow(int x, int n)
 
 int _atoi(char *s)
 {
-	int i = 0, len = 0, result = 0;
+	int i = 0, len = 0, result = 0, neg = 0;
 	char digit;
-
+	
 	/* consume characters before number starts */
-	while (*s < '0' || *s > '9')
+	while ((*s < '0' || *s > '9') && *s != '\0')
 	{
+		if (*s == '-')
+			neg++;
 		s = s + 1;
 	}
+
 	/* get the length of the number */
 	while (*s >= '0' && *s <= '9')
 	{
@@ -50,8 +53,7 @@ int _atoi(char *s)
 		i++;
 	}
 	/* account for negative numbers */
-	digit = (*(s - len - 1));
-	if (digit == '-')
+	if (neg % 2 == 1)
 		result = result * -1;
 	return (result);
 }
