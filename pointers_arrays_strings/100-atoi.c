@@ -37,7 +37,6 @@ int _atoi(char *s)
 			neg++;
 		s = s + 1;
 	}
-
 	/* get the length of the number */
 	while (*s >= '0' && *s <= '9')
 	{
