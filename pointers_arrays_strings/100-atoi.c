@@ -2,24 +2,6 @@
 #include <stdio.h>
 
 /**
- * _pow - computer the power of two integers
- * @x: base integer
- * @n: exponent
- *
- * Return: result of power calculation
- */
-
-int _pow(int x, int n)
-{
-	int i;
-	int number = 1;
-	
-	for (i = 0; i < n; ++i)
-		number *= x;
-	return (number);
-}
-
-/**
  * _atoi - convert string to integer
  * @s: pointer to string to convert
  *
@@ -48,7 +30,7 @@ int _atoi(char *s)
 	while (i < len)
 	{
 		digit = *(s - len + i);
-		result += ((digit - 48) * (_pow(10, len - 1 - i)));
+		result = ((digit - 48) + (result * 10));
 		i++;
 	}
 	/* account for negative numbers */
