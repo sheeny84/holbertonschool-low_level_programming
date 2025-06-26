@@ -28,8 +28,9 @@ int _pow(int x, int n)
 
 int _atoi(char *s)
 {
-	int i = 0, len = 0, result = 0, neg = 0;
+	int i = 0, len = 0, neg = 0;
 	char digit;
+	unsigned int result = 0;
 	/* consume characters before number starts */
 	while ((*s < '0' || *s > '9') && *s != '\0')
 	{
@@ -52,6 +53,7 @@ int _atoi(char *s)
 	}
 	/* account for negative numbers */
 	if (neg % 2 == 1)
-		result = result * -1;
-	return (result);
+		return (result * -1);
+	else
+		return (result);
 }
