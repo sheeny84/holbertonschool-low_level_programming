@@ -15,10 +15,9 @@ char *_strstr(char *haystack, char *needle)
 	char *needleTemp = needle;
 	char *haystackTemp;
 	int match = 0, noMatch = 0;
-	
-	if (*needle == '\0') /* empty string case */
+	/* needle is empty case */
+	if (*needle == '\0')
 		return (haystack);
-
 	while (*haystack != '\0' && match == 0) /* scan haystack */
 	{
 		needle = needleTemp; /* reset needle to start */
