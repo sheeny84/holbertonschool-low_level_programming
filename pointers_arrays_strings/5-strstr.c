@@ -19,6 +19,7 @@ char *_strstr(char *haystack, char *needle)
 	while (*haystack != '\0' && match == 0) /* scan haystack */
 	{
 		needle = needleTemp; /* reset needle to start */
+		noMatch = 0; /* reset no match flag */
 		/* check if haystack matches first byte of needle */
 		if (*haystack == *needle)
 		{
@@ -29,11 +30,8 @@ char *_strstr(char *haystack, char *needle)
 			{
 				if (*needle != *haystack)
 					noMatch = 1;
-				else
-				{
-					needle = needle + 1;
-					haystack = haystack + 1;
-				}
+				needle = needle + 1;
+				haystack = haystack + 1;
 			}
 			/* if we reached the end of needle, its a match */
 			if (*needle == '\0')
