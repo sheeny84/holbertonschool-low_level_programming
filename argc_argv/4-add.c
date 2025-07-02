@@ -13,7 +13,8 @@
 
 int main(int argc, char *argv[])
 {
-	int temp, res = 0, i = 1;
+	int temp, res = 0, i = 1, j = 0;
+	char *str;
 
 	if (argc < 2) /* no args provided other than function name */
 	{
@@ -24,11 +25,19 @@ int main(int argc, char *argv[])
 	{
 		while (i < argc)
 		{
-			temp = atoi(argv[i]);
-			if (temp == 0)
+			temp = 0;
+			str = argv[i];
+			for (j = 0; str[j] != '\0'; j++)
 			{
-				printf("Error\n");
-				return (1);
+				if (str[j] >= 48 && str[j] <= 57)
+				{
+					temp = temp * 10 + (str[j] - 48);
+				}
+				else
+				{
+					printf("Error\n");
+					return (1);
+				}
 			}
 			res += temp;
 			i++;
