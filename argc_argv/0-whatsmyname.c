@@ -3,9 +3,13 @@
 
 /**
  * main - print the name of the program
+ * @argc: count of arguments
+ * @argv: pointer to array of arguments
+ *
+ * Return: 0
  */
 
-int main (int argc, char* argv[])
+int main(int argc, char *argv[])
 {
 	(void)argc; /* cast argc to void to suppress unused param warning */
 	printf("%s\n", argv[0]);
