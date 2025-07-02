@@ -7,7 +7,7 @@
  * @argc: count of arguments
  * @argv: pointer to array of arguments
  *
- * Return: result of the multiplication
+ * Return: 0 on success
  * 1 if two arguments are not recieved
  */
 
@@ -26,6 +26,6 @@ int main(int argc, char *argv[])
 		y = atoi(argv[2]);
 		res = x * y;
 		printf("%d\n", res);
-		return (res);
+		return (0);
 	}
 }
