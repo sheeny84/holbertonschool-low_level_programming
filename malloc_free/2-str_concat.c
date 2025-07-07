@@ -15,7 +15,6 @@ char *str_concat(char *s1, char *s2)
 {
 	int i = 0, j = 0, length1 = 0, length2 = 0;
 	char *ptr;
-
 	/* determine the length of str1 and str2 */
 	while (s1 != NULL && s1[length1] != '\0')
 	{
@@ -25,8 +24,8 @@ char *str_concat(char *s1, char *s2)
 	{
 		length2++;
 	}
-	/* allocate memory using malloc */
-	ptr = malloc((length1 + length2) * sizeof(char));
+	/* allocate memory using malloc and accounting for null byte */
+	ptr = malloc((length1 + length2 + 1) * sizeof(char));
 	/* copy string to memory providing it was successfully allocated */
 	if (ptr == NULL)
 		return (NULL);
@@ -40,6 +39,6 @@ char *str_concat(char *s1, char *s2)
 		ptr[i + j] = s2[j];
 		j++;
 	}
-	ptr[i+j] = '\0';
+	ptr[i + j] = '\0';
 	return (ptr);
 }
