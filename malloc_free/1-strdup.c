@@ -23,6 +23,8 @@ char *_strdup(char *str)
 	{
 		length++;
 	}
+	/* add 1 to length to account for null byte */
+	length++; 
 	/* allocate memory using malloc */
 	ptr = malloc(length * sizeof(char));
 	/* copy string to memory providing it was successfully allocated */
