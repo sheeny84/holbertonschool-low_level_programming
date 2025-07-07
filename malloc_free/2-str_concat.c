@@ -40,7 +40,6 @@ char *str_concat(char *s1, char *s2)
 		ptr[i + j] = s2[j];
 		j++;
 	}
-	if (s1 != NULL && s2 != NULL)
-		ptr[i+j] = '\0';
+	ptr[i+j] = '\0';
 	return (ptr);
 }
