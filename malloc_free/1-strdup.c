@@ -15,6 +15,9 @@ char *_strdup(char *str)
 	int i = 0, length = 0;
 	char *ptr;
 
+	/* invalid input */
+	if (str == NULL)
+		return (NULL);
 	/* determine the length of str */
 	while (str[length] != '\0')
 	{
