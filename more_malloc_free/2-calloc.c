@@ -13,11 +13,19 @@
 
 void *_calloc(unsigned int nmemb, unsigned int size)
 {
-	void *ptr;
+	unsigned int i = 0;
+	char *ptr; /* use char pointer so each byte can be initialised */
 
 	/* invalid value for nmemb or size */
 	if (nmemb == 0 || size == 0)
 		return (NULL);
+
+	/* allocate memory and initialise it to 0 */
 	ptr = malloc(nmemb * size);
+	while (i < (nmemb * size) && ptr != NULL)
+	{
+		ptr[i] = 0;
+		i++;
+	}
 	return (ptr);
 }
