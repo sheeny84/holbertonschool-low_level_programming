@@ -21,10 +21,14 @@ int **alloc_grid(int width, int height)
 		return (NULL);
 	/* allocate memory for pointers to pointers */
 	ptr = malloc(height * sizeof(int *));
+	if (ptr == NULL) /* i.e. malloc failed */
+		return (NULL);
 	/* allocate memory for each row */
 	while (i < height)
 	{
 		ptr[i] = malloc(width * sizeof(int));
+		if (ptr == NULL) /* i.e. malloc failed */
+			return (NULL);
 		/* initialise memory to 0 */
 		while (j < width)
 		{
