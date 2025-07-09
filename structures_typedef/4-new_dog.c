@@ -13,13 +13,30 @@
  */
 dog_t *new_dog(char *name, float age, char *owner)
 {
-	char *my_name = name;
-	char *my_owner = owner;
+	char *my_name;
+	char *my_owner;
 	dog_t *my_dog;
 
+	my_name = malloc(sizeof(name));
+	if (my_name != NULL)
+		my_name = name;
+	else
+		return (NULL);
+	my_owner = malloc(sizeof(owner));
+	if (my_owner != NULL)
+		my_owner = owner;
+	else
+	{
+		free(my_name);
+		return (NULL);
+	}
 	my_dog = malloc(sizeof(dog_t));
 	if (my_dog == NULL)
+	{
+		free(my_name);
+		free(my_owner);
 		return (NULL);
+	}
 	init_dog(my_dog, my_name, age, my_owner);
 	return (my_dog);
 }
