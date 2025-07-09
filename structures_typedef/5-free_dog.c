@@ -1,7 +1,6 @@
 #include "dog.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include "1-init_dog.c"
 
 /**
  * free_dog - free dogs
