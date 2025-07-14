@@ -16,6 +16,11 @@ int int_index(int *array, int size, int (*cmp)(int))
 	int i = 0;
 	int result; /* store result of cmp function */
 
+	/* check for invalid inputs */
+	if (array == NULL || cmp == NULL || size <= 0)
+		return (-1);
+
+	/* search array for match */
 	while (i < size)
 	{
 		result = cmp(array[i]);
@@ -24,6 +29,6 @@ int int_index(int *array, int size, int (*cmp)(int))
 			return (i);
 		i++;
 	}
-	/* if there is no match, or size <= 0 */
+	/* if there is no match return -1 */
 	return (-1);
 }
