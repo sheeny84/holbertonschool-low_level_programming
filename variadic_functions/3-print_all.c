@@ -20,7 +20,6 @@ void print_all(const char * const format, ...)
 	{
 		/* call get_print_func for each char in the format string */
 		f = get_print_func(format[i]);
-		/* if there's a match, call the print function */
 		if (f != NULL)
 		{
 			f(args);
@@ -112,8 +111,5 @@ void print_string(va_list args)
 	char *x;
 
 	x = va_arg(args, char *);
-	if (x == NULL)
-		printf("(nil)");
-	else
-		printf("%s", x);
+	printf("%s", x);
 }
