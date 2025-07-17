@@ -19,7 +19,7 @@ void print_all(const char * const format, ...)
 
 	va_start(args, format);
 	/* iterate through format string */
-	while (format[i] != '\0')
+	while (format != NULL && format[i] != '\0')
 	{
 		/* call get_print_func for each char in the format string */
 		f = get_print_func(format[i]);
