@@ -17,21 +17,12 @@ size_t print_list(const list_t *h)
 	{
 		if (h->str == NULL)
 		{
-			_putchar('[');
-			_putchar('0');
-			_putchar(']');
-			_putchar(' ');
-			_putchar('(');
-			_putchar('n');
-			_putchar('i');
-			_putchar('l');
-			_putchar(')');
-			_putchar('\n');
-			}
+			print_null();
+		}
 		else
 		{
 			_putchar('[');
-			_putchar(h->len + 48);
+			print_len(h->len);
 			_putchar(']');
 			_putchar(' ');
 			while (i < h->len)
@@ -46,4 +37,39 @@ size_t print_list(const list_t *h)
 	h = h->next; /* move to the next node */
 	}
 	return (nodes);
+}
+
+/**
+ * print_null - prints the string "[0] (nil)" using _putchar
+ * 
+ * Return: nothing
+ */
+void print_null()
+{
+	_putchar('[');
+	_putchar('0');
+        _putchar(']');
+        _putchar(' ');
+        _putchar('(');
+        _putchar('n');
+        _putchar('i');
+        _putchar('l');
+        _putchar(')');
+        _putchar('\n');
+}
+
+/**
+ * print_len - prints an unsigned int using _putchar and recursion
+ * len: the unsigned int to print
+ *
+ * Return: nothing
+ */
+void print_len(unsigned int len)
+{
+	if ((len / 10) > 0) /* i.e. still more than single digits */
+	{
+		/* recursive call before printing to reverse print order */
+		print_len(len / 10);
+	}
+	_putchar('0' + (len % 10)); /* print the digit */
 }
