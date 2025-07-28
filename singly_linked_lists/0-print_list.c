@@ -41,26 +41,26 @@ size_t print_list(const list_t *h)
 
 /**
  * print_null - prints the string "[0] (nil)" using _putchar
- * 
+ *
  * Return: nothing
  */
-void print_null()
+void print_null(void)
 {
 	_putchar('[');
 	_putchar('0');
-        _putchar(']');
-        _putchar(' ');
-        _putchar('(');
-        _putchar('n');
-        _putchar('i');
-        _putchar('l');
-        _putchar(')');
-        _putchar('\n');
+	_putchar(']');
+	_putchar(' ');
+	_putchar('(');
+	_putchar('n');
+	_putchar('i');
+	_putchar('l');
+	_putchar(')');
+	_putchar('\n');
 }
 
 /**
  * print_len - prints an unsigned int using _putchar and recursion
- * len: the unsigned int to print
+ * @len: the unsigned int to print
  *
  * Return: nothing
  */
