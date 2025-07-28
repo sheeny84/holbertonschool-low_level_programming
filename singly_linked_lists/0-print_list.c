@@ -1,5 +1,4 @@
 #include "lists.h"
-#include "_putchar.c"
 #include <stdlib.h>
 #include <stddef.h>
 
