@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <stddef.h>
 #include <string.h>
-#include <stdio.h>
 
 /**
  * add_node - add a new node at the beginning of a list
