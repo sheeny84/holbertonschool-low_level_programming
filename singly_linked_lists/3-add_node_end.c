@@ -15,12 +15,21 @@ list_t *add_node_end(list_t **head, const char *str)
 	list_t *new_node = malloc(sizeof(list_t));
 	list_t *temp = malloc(sizeof(list_t));
 
-	/* return null if malloc fails */
+	/* free everything and return null if malloc fails */
 	if (new_node == NULL || temp == NULL)
+	{
+		free(new_node);
+		free(temp);
 		return (NULL);
+	}
 
 	/* add data to new node */
 	new_node->str = strdup(str);
+	if (new_node->str == NULL)
+	{
+		free(new_node);
+		free(temp);
+	}
 	new_node->len = _strlen(str);
 	new_node->next = NULL;
 
