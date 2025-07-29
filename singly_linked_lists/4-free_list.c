@@ -11,28 +11,18 @@
  */
 void free_list(list_t *head)
 {
-	list_t *temp = malloc(sizeof(list_t));
+	list_t *temp;
 	/* iterate through the list */
 	while (head->next != NULL)
 	{
 		temp = head->next;
 		/* free the node from memory */
-		free_list_node(head);
+		free(head->str);
+		free(head);
+		/* set head to the next node */
 		head = temp;
 	}
-	free_list_node(temp);
-	free_list_node(head);
-}
-
-/**
- * free_list_node - free memory for a node in list
- * @node: node to free
- *
- * Return: nothing
- */
-void free_list_node(list_t *node)
-{
-	free(node->str);
-	free(node->next);
-	free(node);
+	/* need to free the last head node */
+	free(head->str);
+	free(head);
 }

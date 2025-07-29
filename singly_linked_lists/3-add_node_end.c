@@ -13,25 +13,28 @@
 list_t *add_node_end(list_t **head, const char *str)
 {
 	list_t *new_node = malloc(sizeof(list_t));
-	list_t *temp = malloc(sizeof(list_t));
+	list_t *temp = *head;
 
-	/* add data to new node */
-	if (new_node != NULL)
-		new_node->str = strdup(str);
-	/* free memory if malloc failed */
-	if (temp == NULL || new_node == NULL || new_node->str == NULL)
+	if (new_node == NULL)
 	{
 		free(new_node);
-		free(temp);
+		return (NULL);
+	}
+	new_node->str = strdup(str);
+	if (new_node->str == NULL)
+	{
+		free(new_node);
+		return (NULL);
 	}
 	new_node->len = _strlen(str);
 	new_node->next = NULL;
 	/* check if new node is the first node in the list */
 	if (*head == NULL)
+	{
 		*head = new_node;
+	}
 	else
 	{
-		temp = *head;
 		/* go to the end of the list */
 		while (temp->next != NULL)
 		{
@@ -40,10 +43,6 @@ list_t *add_node_end(list_t **head, const char *str)
 		/* add the new node at the end */
 		temp->next = new_node;
 	}
-	/* free temp memory */
-	free(temp->str);
-	free(temp->next);
-	free(temp);
 	return (new_node);
 }
 
