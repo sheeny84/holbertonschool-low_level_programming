@@ -12,7 +12,6 @@ int main(void)
 {
     list_t *head;
 
-    printf("in main\n");
     head = NULL;
     add_node(&head, "Alexandro");
     add_node(&head, "Asaia");
