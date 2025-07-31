@@ -16,27 +16,26 @@ dlistint_t *insert_dnodeint_at_index(dlistint_t **h, unsigned int idx, int n)
 	unsigned int i = 0;
 	dlistint_t *new_node, *temp, *head;
 
-	new_node = malloc(sizeof(dlistint_t));
-	if (new_node == NULL) /* malloc failed */
+	/* check if *h is NULL i.e. no nodes in the list yet */
+	/* if idx is not 0 then we cannot add the new node */
+	if (*h == NULL && idx != 0)
 		return (NULL);
 
-	/* set data fornew_node */
-	new_node->n = n;
-	/* check if *h is NULL i.e. no nodes in the list yet */
-	if (*h == NULL && idx == 0)
-	{
-		new_node->next = NULL;
-		new_node->prev = *h;
-		*h = new_node;
-		return (new_node);
-	}
+	/* add node to the beginning of the list if idx is 0 */
+	if (idx == 0)
+		return (add_dnodeint(h, n));
+
 	/* iterate through the list till index */
 	head = *h;
 	while (head->next != NULL)
 	{
-		i++;
 		if (idx == i)
 		{
+			/* create new node */
+			new_node = malloc(sizeof(dlistint_t));
+			if (new_node == NULL) /* malloc failed */
+				return (NULL);
+			new_node->n = n;
 			temp = head->next;
 			head->next = new_node;
 			new_node->prev = head;
@@ -45,7 +44,12 @@ dlistint_t *insert_dnodeint_at_index(dlistint_t **h, unsigned int idx, int n)
 			head = *h;
 			return (new_node);
 		}
+		i++;
 		head = head->next;
 	}
+	/* add node at the end of the list */
+	if (idx == i)
+		return (add_dnodeint_end(h, n));
+	/* i.e. idx was not valid */
 	return (NULL);
 }
