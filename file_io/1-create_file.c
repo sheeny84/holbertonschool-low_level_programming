@@ -36,7 +36,7 @@ int create_file(const char *filename, char *text_content)
 			bytes++;
 		}
 	}
-	
+
 	/* write to file */
 	bytes = write(fd, text_content, bytes);
 	if (bytes == -1)
