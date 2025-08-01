@@ -13,6 +13,7 @@ int main()
     	int ret;
 	ret = create_file("_file_0", "Best School !");
 	printf("%d\n", ret);
-	printf("%s\n", strerror(errno));
+	ret = create_file("_file_0", "Best School");
+        printf("%d\n", ret);
 	return (0);
 }
