@@ -24,7 +24,7 @@ ssize_t read_textfile(const char *filename, size_t letters)
 		return (0);
 
 	/* open the file in read only mode */
-	fd = open(filename, O_RDONLY, 0666);
+	fd = open(filename, O_RDONLY); /* file already exists so mode not reqd */
 	if (fd == -1)
 		return (0);
 
