@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <sys/stat.h>
 
 /**
  * main - print the name of the program
@@ -55,6 +56,7 @@ int main(int argc, char *argv[])
 
 int *open_files(char *file_from, char *file_to, int *fd_array)
 {
+	mode_t old_umask = umask(0);
 	/* open and read from file from */
 	fd_array[0] = open(file_from, O_RDONLY);
 	/* cannot open file */
@@ -62,6 +64,8 @@ int *open_files(char *file_from, char *file_to, int *fd_array)
 		print_error(98, file_from);
 	/* open file to and write into new file */
 	fd_array[1] = open(file_to, O_CREAT | O_TRUNC | O_WRONLY, 0664);
+	/* reset unmask */
+	umask(old_umask);
 	/* cannot open file */
 	if (fd_array[1] == -1)
 		print_error(99, file_to);
