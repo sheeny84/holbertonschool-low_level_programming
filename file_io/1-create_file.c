@@ -20,8 +20,9 @@ int create_file(const char *filename, char *text_content)
 		return (-1);
 
 	/* create file using open */
+	/* flags set to create file if needed and open in write only mode */
 	/* set permissions to rw------- if it does not exist */
-	fd = open(filename, O_CREAT, 600);
+	fd = open(filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR);
 	if (fd == -1)
 		return (-1);
 
@@ -30,7 +31,7 @@ int create_file(const char *filename, char *text_content)
 	{
 		bytes++;
 	}
-
+	
 	/* write to file */
 	bytes = write(fd, text_content, bytes);
 	if (bytes == -1)
