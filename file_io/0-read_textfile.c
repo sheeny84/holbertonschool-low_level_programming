@@ -16,7 +16,7 @@
  */
 ssize_t read_textfile(const char *filename, size_t letters)
 {
-	char buf[2000]; /* buffer to read file into */
+	char buf[2048]; /* set buffer to 2KB */
 	int fd; /* file descriptor */
 	ssize_t bytes; /* number of bytes read/written */
 
