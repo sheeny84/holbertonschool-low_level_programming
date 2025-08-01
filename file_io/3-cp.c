@@ -15,8 +15,9 @@
 int main(int argc, char *argv[])
 {
 	char *file_from, *file_to, *buffer[1024];
+	int fd_array[2];
 	int fd_from, fd_to;
-	ssize_t bytes;
+	ssize_t bytes = 1024;
 
 	/* error handling if number of arguments is incorrect */
 	if (argc != 3)
@@ -27,24 +28,21 @@ int main(int argc, char *argv[])
 	/* get input args */
 	file_from = argv[1];
 	file_to = argv[2];
-	/* open and read from file from */
-	fd_from = open(file_from, O_RDONLY);
-	bytes = read(fd_from, buffer, 1024);
-	/* cannot open file or cannot read file */
-	if ((fd_from == -1) | (bytes == -1))
+	
+	open_files(file_from, file_to, fd_array);
+	fd_from = fd_array[0];
+	fd_to = fd_array[1];
+
+	while (bytes == 1024)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", file_from);
-		exit(98);
+		bytes = read(fd_from, buffer, bytes);
+		if (bytes == -1)
+			print_error(98, file_from);
+		bytes = write(fd_to, buffer, bytes);
+		if (bytes == -1)
+			print_error(99, file_to);
 	}
-	/* open file to and write into new file */
-	fd_to = open(file_to, O_CREAT | O_TRUNC | O_WRONLY, 0664);
-	bytes = write(fd_to, buffer, bytes);
-	/* cannot open file or cannot write to file */
-	if ((fd_to == -1) | (bytes == -1))
-	{
-		dprintf(STDERR_FILENO, "Error: Can't write to file %s\n", file_to);
-		exit(99);
-	}
+
 	/* close files */
 	if (close(fd_to) == -1)
 		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd_to);
@@ -53,4 +51,33 @@ int main(int argc, char *argv[])
 	if (close(fd_to) == -1 || close(fd_from) == -1)
 		exit(100);
 	return (0);
+}
+
+int *open_files(char *file_from, char *file_to, int *fd_array)
+{
+	/* open and read from file from */
+	fd_array[0] = open(file_from, O_RDONLY);
+	/* cannot open file */
+	if (fd_array[0] == -1)
+		print_error(98, file_from);
+	/* open file to and write into new file */
+	fd_array[1] = open(file_to, O_CREAT | O_TRUNC | O_WRONLY, 0664);
+	/* cannot open file */
+	if (fd_array[1] == -1)
+		print_error(99, file_to);
+	return (fd_array);
+}
+
+void print_error(int exit_code, char *file_name)
+{
+	if (exit_code == 98)
+	{
+		 dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", file_name);
+                        exit(98);
+	}
+	if (exit_code == 99)
+	{
+                        dprintf(STDERR_FILENO, "Error: Can't write to file %s\n", file_name);
+			exit(99);
+	}
 }
