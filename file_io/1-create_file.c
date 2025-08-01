@@ -27,10 +27,14 @@ int create_file(const char *filename, char *text_content)
 	if (fd == -1)
 		return (-1);
 
-	/* get length of string */
-	while (text_content[bytes] != '\0')
+	if (text_content == NULL)
+		bytes = 0;
+	else /* get length of string */
 	{
-		bytes++;
+		while (text_content[bytes] != '\0')
+		{
+			bytes++;
+		}
 	}
 	
 	/* write to file */
