@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 	/* get input args */
 	file_from = argv[1];
 	file_to = argv[2];
-	
+
 	open_files(file_from, file_to, fd_array);
 	fd_from = fd_array[0];
 	fd_to = fd_array[1];
@@ -54,6 +54,14 @@ int main(int argc, char *argv[])
 	return (0);
 }
 
+/**
+ * open_files - open file_from and file_to and check for errors
+ * @file_from: name of file from to open
+ * @file_to: name of file to to open
+ * @fd_array: array to store file descriptors
+ *
+ * Return: array with file from and file to file descriptors
+ */
 int *open_files(char *file_from, char *file_to, int *fd_array)
 {
 	mode_t old_umask = umask(0);
@@ -72,16 +80,23 @@ int *open_files(char *file_from, char *file_to, int *fd_array)
 	return (fd_array);
 }
 
+/**
+ * print_error - print error statement depending on error code
+ * @exit_code: exit code to use
+ * @file_name: file name which has caused the error
+ *
+ * Return: nothing
+ */
 void print_error(int exit_code, char *file_name)
 {
 	if (exit_code == 98)
 	{
-		 dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", file_name);
-                        exit(98);
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", file_name);
+		 exit(98);
 	}
 	if (exit_code == 99)
 	{
-                        dprintf(STDERR_FILENO, "Error: Can't write to file %s\n", file_name);
-			exit(99);
+		dprintf(STDERR_FILENO, "Error: Can't write to file %s\n", file_name);
+		exit(99);
 	}
 }
