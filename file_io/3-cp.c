@@ -15,7 +15,7 @@
 
 int main(int argc, char *argv[])
 {
-	char *file_from, *file_to, *buffer[1024];
+	char *buffer[1024];
 	int fd_array[2];
 	int fd_from, fd_to;
 	ssize_t bytes_read = 1024, bytes_write;
@@ -26,11 +26,8 @@ int main(int argc, char *argv[])
 		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
 		exit(97);
 	}
-	/* get input args */
-	file_from = argv[1];
-	file_to = argv[2];
 
-	open_files(file_from, file_to, fd_array);
+	open_files(argv[1], argv[2], fd_array);
 	fd_from = fd_array[0];
 	fd_to = fd_array[1];
 
@@ -38,10 +35,10 @@ int main(int argc, char *argv[])
 	{
 		bytes_read = read(fd_from, buffer, 1024);
 		if (bytes_read == -1)
-			print_error(98, file_from);
+			print_error(98, argv[1]);
 		bytes_write = write(fd_to, buffer, bytes_read);
 		if (bytes_write < bytes_read)
-			print_error(99, file_to);
+			print_error(99, argv[2]);
 	}
 
 	/* close files */
@@ -60,11 +57,10 @@ int main(int argc, char *argv[])
  * @file_to: name of file to to open
  * @fd_array: array to store file descriptors
  *
- * Return: array with file from and file to file descriptors
+ * Return: nothing
  */
-int *open_files(char *file_from, char *file_to, int *fd_array)
+void open_files(char *file_from, char *file_to, int *fd_array)
 {
-	mode_t old_umask = umask(0);
 	/* open and read from file from */
 	fd_array[0] = open(file_from, O_RDONLY);
 	/* cannot open file */
@@ -72,12 +68,9 @@ int *open_files(char *file_from, char *file_to, int *fd_array)
 		print_error(98, file_from);
 	/* open file to and write into new file */
 	fd_array[1] = open(file_to, O_CREAT | O_TRUNC | O_WRONLY, 0664);
-	/* reset unmask */
-	umask(old_umask);
 	/* cannot open file */
 	if (fd_array[1] == -1)
 		print_error(99, file_to);
-	return (fd_array);
 }
 
 /**
@@ -92,7 +85,7 @@ void print_error(int exit_code, char *file_name)
 	if (exit_code == 98)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", file_name);
-		 exit(98);
+		exit(98);
 	}
 	if (exit_code == 99)
 	{
