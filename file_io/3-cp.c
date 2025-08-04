@@ -18,12 +18,12 @@ int main(int argc, char *argv[])
 	char *file_from, *file_to, *buffer[1024];
 	int fd_array[2];
 	int fd_from, fd_to;
-	ssize_t bytes = 1024;
+	ssize_t bytes_read = 1024, bytes_write;
 
 	/* error handling if number of arguments is incorrect */
 	if (argc != 3)
 	{
-		write(STDERR_FILENO, "Usage: cp file_from file_to\n", 28);
+		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
 		exit(97);
 	}
 	/* get input args */
@@ -34,13 +34,13 @@ int main(int argc, char *argv[])
 	fd_from = fd_array[0];
 	fd_to = fd_array[1];
 
-	while (bytes == 1024)
+	while (bytes_read == 1024)
 	{
-		bytes = read(fd_from, buffer, bytes);
-		if (bytes == -1)
+		bytes_read = read(fd_from, buffer, 1024);
+		if (bytes_read == -1)
 			print_error(98, file_from);
-		bytes = write(fd_to, buffer, bytes);
-		if (bytes == -1)
+		bytes_write = write(fd_to, buffer, bytes_read);
+		if (bytes_write < bytes_read)
 			print_error(99, file_to);
 	}
 
