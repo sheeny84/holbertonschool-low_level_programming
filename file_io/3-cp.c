@@ -30,8 +30,6 @@ int main(int argc, char *argv[])
 	}
 	/* open file to and write into new file */
 	fd_to = open(argv[2], O_CREAT | O_TRUNC | O_WRONLY, 0664);
-	if (fd_to == -1)
-		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]), exit(99);
 	while (bytes_from == 1024)
 	{
 		bytes_from = read(fd_from, buffer, 1024);
