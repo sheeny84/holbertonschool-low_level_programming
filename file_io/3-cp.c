@@ -53,3 +53,4 @@ int main(int argc, char *argv[])
 	if (close(fd_to) == -1 || close(fd_from) == -1)
 		exit(100);
 	return (0);
+}
