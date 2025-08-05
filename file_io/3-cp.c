@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
 	/* open file to and write into new file */
 	fd_to = open(argv[2], O_CREAT | O_TRUNC | O_WRONLY, 0664);
 	if (fd_to == -1)
-		dprintf(STDERR_FILENO, "Error: Can't write to file %s\n", argv[2]), exit(99);
+		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]), exit(99);
 	while (bytes_from == 1024)
 	{
 		bytes_from = read(fd_from, buffer, 1024);
@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 		bytes_to = write(fd_to, buffer, bytes_from);
 		/* cannot open file or cannot write to file */
 		if (bytes_to < bytes_from)
-			dprintf(STDERR_FILENO, "Error: Can't write to file %s\n", argv[2]), exit(99);
+			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]), exit(99);
 	}
 	/* close files */
 	if (close(fd_to) == -1)
