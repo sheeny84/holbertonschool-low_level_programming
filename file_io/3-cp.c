@@ -1,95 +1,44 @@
-#include "main.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include <sys/stat.h>
-
+#include "main.h"
 /**
- * main - print the name of the program
- * @argc: count of arguments
- * @argv: pointer to array of arguments
- *
- * Return: 0
- */
-
+* main - program that copies the content of a file to another file
+* @argc: num argument
+* @argv: string argument
+* Return: 0
+*/
 int main(int argc, char *argv[])
 {
-	char *buffer[1024];
-	int fd_array[2];
-	int fd_from, fd_to;
-	ssize_t bytes_read = 1024, bytes_write;
-
-	/* error handling if number of arguments is incorrect */
+	int source, dest, num1 = 1024, num2 = 0;
+	char store_content[1024];
 	if (argc != 3)
+		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n"), exit(97);
+	source = open(argv[1], O_RDONLY);
+	dest = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
+	if (source == -1)
 	{
-		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
-		exit(97);
-	}
-
-	open_files(argv[1], argv[2], fd_array);
-	fd_from = fd_array[0];
-	fd_to = fd_array[1];
-
-	while (bytes_read == 1024)
-	{
-		bytes_read = read(fd_from, buffer, 1024);
-		if (bytes_read == -1)
-			print_error(98, argv[1]);
-		bytes_write = write(fd_to, buffer, bytes_read);
-		if (bytes_write < bytes_read)
-			print_error(99, argv[2]);
-	}
-
-	/* close files */
-	if (close(fd_to) == -1)
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd_to);
-	if (close(fd_from) == -1)
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd_from);
-	if (close(fd_to) == -1 || close(fd_from) == -1)
-		exit(100);
-	return (0);
-}
-
-/**
- * open_files - open file_from and file_to and check for errors
- * @file_from: name of file from to open
- * @file_to: name of file to to open
- * @fd_array: array to store file descriptors
- *
- * Return: nothing
- */
-void open_files(char *file_from, char *file_to, int *fd_array)
-{
-	/* open and read from file from */
-	fd_array[0] = open(file_from, O_RDONLY);
-	/* cannot open file */
-	if (fd_array[0] == -1)
-		print_error(98, file_from);
-	/* open file to and write into new file */
-	fd_array[1] = open(file_to, O_CREAT | O_TRUNC | O_WRONLY, 0664);
-	/* cannot open file */
-	if (fd_array[1] == -1)
-		print_error(99, file_to);
-}
-
-/**
- * print_error - print error statement depending on error code
- * @exit_code: exit code to use
- * @file_name: file name which has caused the error
- *
- * Return: nothing
- */
-void print_error(int exit_code, char *file_name)
-{
-	if (exit_code == 98)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", file_name);
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
 		exit(98);
 	}
-	if (exit_code == 99)
+	while (num1 == 1024)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't write to file %s\n", file_name);
-		exit(99);
+		num1 = read(source, store_content, 1024);
+		if (num1 == -1)
+		{
+			dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
+			exit(98);
+		}
+		num2 = write(dest, store_content, num1);
+		if (num2 < num1)
+		{
+			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]), exit(99);
+		}
 	}
+	if (close(source) == -1)
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", source), exit(100);
+	if (close(dest) == -1)
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", dest), exit(100);
+	return (0);
 }
