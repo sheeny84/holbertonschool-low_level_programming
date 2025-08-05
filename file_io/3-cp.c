@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
 {
 	char buffer[1024];
 	int fd_from, fd_to;
-	ssize_t bytes_from, bytes_to;
+	ssize_t bytes_from = 1024, bytes_to = 0;
 
 	/* error handling if number of arguments is incorrect */
 	if (argc != 3)
