@@ -16,11 +16,11 @@ int main(int argc, char *argv[])
 {
 	char buffer[1024];
 	int fd_from, fd_to;
-	ssize_t bytes;
+	ssize_t bytes_from, bytes_to;
 
 	/* error handling if number of arguments is incorrect */
 	if (argc != 3)
-		write(STDERR_FILENO, "Usage: cp file_from file_to\n", 28), exit(97);
+		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n"), exit(97);
 	/* open and read from file from */
 	fd_from = open(argv[1], O_RDONLY);
 	if (fd_from == -1)
@@ -29,15 +29,15 @@ int main(int argc, char *argv[])
 	fd_to = open(argv[2], O_CREAT | O_TRUNC | O_WRONLY, 0664);
 	if (fd_to == -1)
 		dprintf(STDERR_FILENO, "Error: Can't write to file %s\n", argv[2]), exit(99);
-	while (bytes == 1024)
+	while (bytes_from == 1024)
 	{
-		bytes = read(fd_from, buffer, 1024);
+		bytes_from = read(fd_from, buffer, 1024);
 		/* cannot open file or cannot read file */
-		if (bytes == -1)
+		if (bytes_from == -1)
 			dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]), exit(98);
-		bytes = write(fd_to, buffer, bytes);
+		bytes_to = write(fd_to, buffer, bytes_from);
 		/* cannot open file or cannot write to file */
-		if (bytes == -1)
+		if (bytes_to < bytes_from)
 			dprintf(STDERR_FILENO, "Error: Can't write to file %s\n", argv[2]), exit(99);
 	}
 	/* close files */
