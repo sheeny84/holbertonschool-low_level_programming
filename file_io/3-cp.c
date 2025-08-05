@@ -24,7 +24,10 @@ int main(int argc, char *argv[])
 	/* open and read from file from */
 	fd_from = open(argv[1], O_RDONLY);
 	if (fd_from == -1)
-		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]), exit(98);
+	{
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
+		exit(98);
+	}
 	/* open file to and write into new file */
 	fd_to = open(argv[2], O_CREAT | O_TRUNC | O_WRONLY, 0664);
 	if (fd_to == -1)
@@ -34,7 +37,10 @@ int main(int argc, char *argv[])
 		bytes_from = read(fd_from, buffer, 1024);
 		/* cannot open file or cannot read file */
 		if (bytes_from == -1)
-			dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]), exit(98);
+		{
+			dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
+			exit(98);
+		}
 		bytes_to = write(fd_to, buffer, bytes_from);
 		/* cannot open file or cannot write to file */
 		if (bytes_to < bytes_from)
